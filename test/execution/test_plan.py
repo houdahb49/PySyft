@@ -13,6 +13,7 @@ from syft.generic.frameworks.types import FrameworkTensor
 from syft.execution.placeholder import PlaceHolder
 from syft.execution.plan import Plan
 from syft.execution.translation.torchscript import PlanTranslatorTorchscript
+from syft.execution.translation.tfjs import PlanTranslatorTfjs
 from syft.serde.serde import deserialize
 from syft.serde.serde import serialize
 
@@ -1136,6 +1137,20 @@ def test_plan_input_usage(hook):
     pointer_to_result = pointer_plan(pointer_to_data_1, pointer_to_data_2)
     result = pointer_to_result.get()
     assert (result == x12).all
+
+
+def test_func_plan_can_be_translated_to_tfjs(hook, workers):
+    @sy.func2plan(args_shape=[(3, 3)])
+    def plan(x):
+        x = x * 2
+        x = x.abs()
+        return x
+
+    inp = th.tensor([1, -1, 2])
+    res1 = plan(inp)
+    plan_js = plan.add_translation(PlanTranslatorTfjs)
+    assert plan_js.role.actions[0].name == 'mul'
+    assert len(plan_js.role.actions[0].args) == 2
 
 
 def test_func_plan_can_be_translated_to_torchscript(hook, workers):
