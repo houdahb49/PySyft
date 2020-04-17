@@ -11,7 +11,7 @@ class PlanTranslatorTfjs(AbstractPlanTranslator):
     """Performs translation from 'list of ops' Plan into torchscript Plan"""
 
     def __init__(self, plan):
-        self.threepio = Threepio('torch', 'tfjs', None)
+        self.threepio = Threepio("torch", "tfjs", None)
         super().__init__(plan)
 
     def translate(self):

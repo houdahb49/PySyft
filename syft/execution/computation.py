@@ -15,8 +15,15 @@ from pythreepio.errors import TranslationMissing
 class ComputationAction(Action):
     """Describes mathematical operations performed on tensors"""
 
-    def __init__(self, name, target, args_, kwargs_, return_ids, 
-                 base_framework=TranslationTargets.PYTORCH.value):
+    def __init__(
+        self,
+        name,
+        target,
+        args_,
+        kwargs_,
+        return_ids,
+        base_framework=TranslationTargets.PYTORCH.value,
+    ):
         """Initialize an action
 
         Args:
@@ -50,7 +57,7 @@ class ComputationAction(Action):
     @base_framework.setter
     def base_framework(self, value):
         cmd = self.translations[value]
-        self.name = '.'.join(cmd.attrs)
+        self.name = ".".join(cmd.attrs)
         self.args = cmd.args
         self.kwargs = cmd.kwargs
         self._base_framework = value
@@ -62,20 +69,16 @@ class ComputationAction(Action):
             if framework == self._base_framework:
                 continue
             threepio = Threepio(self.base_framework, framework, None)
-            function_name = self.name.split('.')[-1]
+            function_name = self.name.split(".")[-1]
             try:
                 if self.target is None:
                     # Translate normally if action isn't a method of a tensor
                     args = self.args
-                    cmd = threepio.translate(
-                        Command(function_name, self.args, self.kwargs)
-                    )
+                    cmd = threepio.translate(Command(function_name, self.args, self.kwargs))
                 else:
                     # Otherwise reformat into proper translation
                     args = [self.target, *self.args]
-                    cmd = threepio.translate(
-                        Command(function_name, args, self.kwargs)
-                    )
+                    cmd = threepio.translate(Command(function_name, args, self.kwargs))
             except TranslationMissing:
                 translations[target] = None
                 continue

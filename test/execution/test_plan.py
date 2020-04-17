@@ -1149,7 +1149,7 @@ def test_func_plan_can_be_translated_to_tfjs(hook, workers):
     inp = th.tensor([1, -1, 2])
     res1 = plan(inp)
     plan_js = plan.add_translation(PlanTranslatorTfjs)
-    assert plan_js.role.actions[0].name == 'mul'
+    assert plan_js.role.actions[0].name == "mul"
     assert len(plan_js.role.actions[0].args) == 2
 
 
