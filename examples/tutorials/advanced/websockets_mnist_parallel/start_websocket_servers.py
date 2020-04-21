@@ -30,7 +30,7 @@ call_alice = [
     "--id",
     "alice",
     "--host",
-    "0.0.0.0",
+    "127.0.0.1",
     "--notebook",
     "mnist-parallel",
 ]
@@ -43,7 +43,7 @@ call_bob = [
     "--id",
     "bob",
     "--host",
-    "0.0.0.0",
+    "127.0.0.1",
     "--notebook",
     "mnist-parallel",
 ]
@@ -56,7 +56,7 @@ call_charlie = [
     "--id",
     "charlie",
     "--host",
-    "0.0.0.0",
+    "127.0.0.1",
     "--notebook",
     "mnist-parallel",
 ]
@@ -70,7 +70,7 @@ call_testing = [
     "testing",
     "--testing",
     "--host",
-    "0.0.0.0",
+    "127.0.0.1",
     "--notebook",
     "mnist-parallel",
 ]
